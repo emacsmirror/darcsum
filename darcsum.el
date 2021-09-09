@@ -1814,6 +1814,17 @@ the file or the directory at point into the boring file."
       (ediff-merge (darcsum-original-path (point))
                    (darcsum-path (point)))))))
 
+;; Push all change
+(defun darcsum-push()
+  "Push all patches silently"
+    (interactive)
+    (message "Pushing changes...")
+    (darcsum-start-process
+     "push" (list "-a")
+     (list)
+     'darcsum-parent-buffer (current-buffer))
+    (message "done"))
+
 (defun darcsum-redo (&optional arg)
   "Refresh the status, redoing `darcs whatsnew'.
 With prefix arg, run darcs with arg `--look-for-adds'."
@@ -1946,10 +1957,9 @@ Inserts the entry in the darcs comment file instead of the ChangeLog."
     (define-key map "e" 'darcsum-ediff)
     (define-key map "E" 'darcsum-ediff-merge)
     (define-key map "g" 'darcsum-redo)
-    (define-key map "n" 'darcsum-next-line)
-    (define-key map "p" 'darcsum-previous-line)
-    (define-key map "N" 'darcsum-next-file)
-    (define-key map "P" 'darcsum-previous-file)
+    (define-key map "n" 'darcsum-next-file)
+    (define-key map "p" 'darcsum-previous-file)
+    (define-key map "P" 'darcsum-push)
     (define-key map "a" 'darcsum-add)
     (define-key map "l" 'darcsum-add-change-log-entry)
     (define-key map "c" 'darcsum-record)
